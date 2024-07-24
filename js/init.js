@@ -136,15 +136,31 @@ function processData(data) {
         let tmp = data[i];
         let show = tmp["Are you in Grades 9-12, and do you attend Newbury Park High School as a student athlete?"];        
         if (show === "Yes") {    
+            let waterSource = tmp["During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? "];
+            let markerCategory;
+
+            switch (waterSource) {
+                case "Off-campus (e.g., water from home, local stores, etc.)":
+                    markerCategory = 'off-campus';
+                    break;
+                case "On-campus (water fountains)":
+                    markerCategory = 'on-campus';
+                    break;
+                case "Both":
+                    markerCategory = 'both';
+                    break;
+            }
+
             places.push(new Place(tmp["Timestamp"],
                                         tmp["Which of the following places do you spend the most time at for your sport?"],
-                                        tmp["During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? "],
+                                        waterSource,
                                         tmp["In regards to the previous question, what is the reason for your preference (or lack thereof)? "],
                                         tmp["Do you think there are enough clean and reliable water fountains at NPHS during sports practices? "],
                                         tmp["In regards to the previous question, why do you feel this way? "],
                 ));
         }
     }
+    console.log(places);
     places.forEach(place => createCustomIcon(place.caption, place.coords).addTo(map) );
 }
 
@@ -153,10 +169,56 @@ const structures = new Set();
 let clusters = new Object();
 
 const legend_colors = {
-    "Item 1" : "#bfd7ed",
-    "Item 2": "#60a3d9",
-    "Item 3" : "#0074b7",
-    "Item 4": "#003b73",
+    "Select All" : "#bfd7ed",
+    "Off-Campus": "#60a3d9",
+    "On-Campus" : "#0074b7",
+    "Both": "#003b73",
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("legend").addEventListener('click', function(event) {
+        if (event.target.classList.contains('legend-item')) {
+            let category = event.target.getAttribute('data-category');
+            toggleCheckbox(event.target);
+            filterMarkers(category);
+        }
+    });
+});
+
+function toggleCheckbox(item) {
+    let dot = item.querySelector('.dot');
+    dot.classList.toggle('checked');
+}
+
+function filterMarkers(category) {
+    map.eachLayer(function(layer) {
+        if (layer instanceof maplibregl.Marker) {
+            let markerCategory = layer.options.category;
+
+            let showMarker = true;
+
+            switch (category) {
+                case 'Select All':
+                    // show all markers
+                    break;
+                case 'Off-Campus':
+                    showMarker = (markerCategory === 'off-campus');
+                    break;
+                case 'On-Campus':
+                    showMarker = (markerCategory === 'on-campus');
+                    break;
+                case 'Both':
+                    showMarker = (markerCategory === 'both');
+                    break;
+            }
+
+            if (showMarker) {
+                layer.addTo(map)
+            } else {
+                map.removeLayer(layer);
+            }
+        }
+    });
 }
 
 const locations = {

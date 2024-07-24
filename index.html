@@ -25,7 +25,7 @@
 
     <header>
         <div id="title">
-            <h1>TITLE</h1>
+            <h1>Newbury Park Student Athletes' H2Opinions</h1>
         </div>
 
         <div id="navbar">
@@ -41,7 +41,24 @@
             <div class="title"><h2>Student Responses</h2></div>
             <div id="map">
                 <!-- Map will be inserted here -->
-                <div id="legend"></div>
+                <div id="legend">
+                    <div class="legend-item" data-category="Select All" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
+                        <span class="dot" style="background-color:#bfd7ed;"></span>
+                        <p>Select All</p>
+                    </div>
+                    <div class="legend-item" data-category="Off-Campus" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
+                        <span class="dot" style="background-color:#60a3d9;"></span>
+                        <p>Off-Campus</p>
+                    </div>
+                    <div class="legend-item" data-category="On-Campus" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
+                        <span class="dot" style="background-color:#0074b7;"></span>
+                        <p>On-Campus</p>
+                    </div>
+                    <div class="legend-item" data-category="Both" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
+                        <span class="dot" style="background-color:#003b73;"></span>
+                        <p>Both</p>
+                    </div>
+                </div>
             </div>
         </div>
 

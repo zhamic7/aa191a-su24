@@ -63,6 +63,7 @@ main {
     flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
+    cursor: pointer;
 }
 
 .dot {
@@ -71,6 +72,15 @@ main {
     border-radius: 50%;
     display: inline-block;
     margin-right: 10px;
+    border: 1px solid #000;
+}
+
+.dot.checked {
+    background-color: #747474;
+}
+
+.legend-item p {
+    margin: 0;
 }
 
 .mapPopup {
