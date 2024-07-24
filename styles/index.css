@@ -12,15 +12,17 @@ main {
 .col1 {
     grid-area: col1;
     display: flex;
-    flex-flow: column;    
+    flex-flow: column;  
+    align-content: start;
+      
 }
 
 .col2 {
     grid-area: col2;
-    display: flex;
-    flex-flow: column;
-
     background-color: paleturquoise;
+    overflow: auto;
+    align-content: start;
+    height: 100vh;
 }
 
 .title {
@@ -86,4 +88,20 @@ main {
 
     padding-bottom: 5px;
     margin-bottom: 10px;
+}
+
+#filter {
+    position: sticky; 
+    top: 0;
+    background: lavender;
+}
+
+.card {
+    background-color: white;
+    margin: 1vw;
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 2.5%;
+    padding: 1vw;
 }

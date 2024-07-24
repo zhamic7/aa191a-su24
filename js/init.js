@@ -1,5 +1,25 @@
 /*** Scripts for index.html ***/
 
+function filter(tag) {
+    console.log(tag);
+    let cards = document.getElementsByClassName("card");
+    if (tag !== "Default") {
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].style.visibility = "hidden";
+        }
+
+        cards = document.getElementsByClassName("card " + tag);
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].style.visibility = "visible";
+        }
+    }
+    else {
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].style.visibility = "visible";
+        }
+    }
+}
+
 function createButtons(){
     const location_keys = Object.keys(locations); // Returns [ "Gym", "Tennis Court", "Pool", "Panther Stadium", "Soccer Field", "Borchard Community Park" ]
     location_keys.push("Default View"); 
@@ -16,7 +36,6 @@ function createButtons(){
             
             const newButton = document.createElement("button"); 
             newButton.className = "zoom";
-            newButton.id = key.split(' ')[0]; // Get first word only of key
             newButton.innerHTML = `<p class="zoom-label">${key.toUpperCase()}</p>`; 
             newButton.setAttribute("lat", lat); 
             newButton.setAttribute("lon", lon); 
@@ -25,10 +44,11 @@ function createButtons(){
                     center: [lon, lat], 
                     zoom: zoom,
                 }); 
-                console.log(newButton.id);
+
+                let tag = key.split(' ')[0]; // Get first word only of key
+                filter(tag);
             });
             document.getElementById("filter").appendChild(newButton); 
-            console.log(key + ", lat: " + lat + ", lon: " + lon);
         }
     ); 
 }
@@ -50,7 +70,16 @@ function createCustomIcon (caption, latlng, color) {
     return new maplibregl.Marker({element: el})
         .setLngLat(latlng)
         .setPopup(new maplibregl.Popup({ offset: 25 }) // Add popups
-        .setHTML(caption));
+        .setHTML(`<div class="mapPopup">
+                        <div class="popupTitle">${caption}</div>
+                    </div>`));
+}
+
+function createCard(tag, content) {
+    const card = document.createElement('div');
+    card.className = "card " + tag.split(' ')[0]; // Get first word only
+    card.innerHTML = `<p>${content}</p>`;
+    document.getElementById("cards").appendChild(card); 
 }
 
 function checkPlace(place) {
@@ -81,14 +110,14 @@ function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
                     <p style="font-weight:bold;">In regards to the previous question, why do you feel this way? </p>
                     <p>${clean_desc}</p>`;
 
-    this.caption = `<div class="mapPopup">
-                        <div class="popupTitle">
+    this.caption = `<div class="popupTitle">
                             <h2 style="font-size:16px;">Response from ${place}, (${time})</h2>
-                        </div>
-                        <p style="margin-top: 7px;">${stories}</p>
-                    </div>`;
+                    </div>
+                    <p style="margin-top: 7px;">${stories}</p>`;
     this.coords = [lon, lat];
     this.category_color = legend_colors[place];
+
+    createCard(place, this.caption);
 }
 
 
@@ -107,7 +136,6 @@ function processData(data) {
                 ));
         }
     }
-    console.log(places);
     places.forEach(place => createCustomIcon(place.caption, place.coords).addTo(map) );
 }
 
