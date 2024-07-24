@@ -4,7 +4,7 @@
 function filter(tag) {
     console.log(tag);
     let cards = document.getElementsByClassName("card");
-    if (tag !== "Default") {
+    if (tag !== "View") {
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.visibility = "hidden";
             cards[i].style.height = '0';
@@ -32,13 +32,13 @@ function filter(tag) {
 
 function createButtons(){
     const location_keys = Object.keys(locations); // Returns [ "Gym", "Tennis Court", "Pool", "Panther Stadium", "Soccer Field", "Borchard Community Park" ]
-    location_keys.push("Default View"); 
+    location_keys.unshift("View All"); 
     location_keys.forEach( (key) => 
         {
             let lat = mapZoom.lat;
             let lon = mapZoom.lon;
             let zoom = mapZoom.zoom;
-            if (key !== "Default View") {
+            if (key !== "View All") {
                 lat = locations[key].lat;
                 lon = locations[key].lon;
                 zoom = 19;
@@ -66,14 +66,14 @@ function createButtons(){
 function createCustomIcon (caption, latlng, color) {
     // Create a DOM element for the marker
     const el = document.createElement('div');
-    el.style.backgroundImage = 'url(images/my-icon.png)';
+    // el.style.backgroundImage = 'url(images/my-icon.png)';
     el.style.backgroundSize = '50px';
     el.style.width = '50px'; // iconSize width
     el.style.height = '50px'; // iconSize height
     el.style.display = 'block';
     el.style.borderRadius = '50%'; // Optional: makes the icon circular
     el.style.border = "2px solid";
-    el.style.borderColor = color;
+    el.style.borderColor = "black";
     el.style.backgroundColor = color;
     //el.style.boxShadow = '0px 0px 20px rgba(0, 0, 0, 0.5)'; // Optional: adds shadow effect
     
@@ -172,10 +172,10 @@ const structures = new Set();
 let clusters = new Object();
 
 const legend_colors = {
-    "Select All" : "#bfd7ed",
-    "Off-campus": "#60a3d9",
-    "On-campus" : "#0074b7",
-    "Both": "#003b73",
+    "Select All" : "white",
+    "Off-campus": "#F48BA9",
+    "On-campus" : "#86CBED",
+    "Both": "#936ED4",
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -265,11 +265,18 @@ map.on('load', function() {
 
 createButtons();
 
-let legend = `<div><p style="font-weight: bold; margin-bottom:10px;">Legend</p></div>`;
+let legend = `<form><div><p style="font-weight: bold; margin-bottom:10px;">Legend</p>`;
+let i = 1;
 for (const [key, value] of Object.entries(legend_colors)) {
+    let id_name = "choice" + i;
     legend = legend.concat(`<div class="legend-item">
-                                <span class="dot" style="background-color:${value}"></span>
-                                <p>${key}</p>
+                                <input type="radio" id="${id_name}" name="layer" value="${key}" />
+                                <label for="${id_name}">
+                                    <span class="dot" style="background-color:${value}"></span>
+                                    <p>${key}</p>
+                                </label>    
                             </div>`);
+    i++;
 }
+legend = legend.concat(`</div></form>`);
 document.getElementById("legend").innerHTML = legend;

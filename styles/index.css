@@ -83,6 +83,12 @@ main {
     margin: 0;
 }
 
+label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .mapPopup {
     background-color: #f8f9fa;
     color: #212529;
