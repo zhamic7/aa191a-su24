@@ -66,14 +66,14 @@ function createButtons(){
 function createCustomIcon (caption, latlng, color) {
     // Create a DOM element for the marker
     const el = document.createElement('div');
-    // el.style.backgroundImage = 'url(images/my-icon.png)';
+    el.style.backgroundImage = 'url(images/my-icon.png)';
     el.style.backgroundSize = '50px';
     el.style.width = '50px'; // iconSize width
     el.style.height = '50px'; // iconSize height
     el.style.display = 'block';
     el.style.borderRadius = '50%'; // Optional: makes the icon circular
     el.style.border = "2px solid";
-    el.style.borderColor = "black";
+    el.style.borderColor = color;
     el.style.backgroundColor = color;
     //el.style.boxShadow = '0px 0px 20px rgba(0, 0, 0, 0.5)'; // Optional: adds shadow effect
     
@@ -270,13 +270,20 @@ let i = 1;
 for (const [key, value] of Object.entries(legend_colors)) {
     let id_name = "choice" + i;
     legend = legend.concat(`<div class="legend-item">
-                                <input type="radio" id="${id_name}" name="layer" value="${key}" />
-                                <label for="${id_name}">
-                                    <span class="dot" style="background-color:${value}"></span>
-                                    <p>${key}</p>
-                                </label>    
+                                <span class="dot" style="background-color:${value}"></span>
+                                <p>${key}</p>   
                             </div>`);
     i++;
 }
 legend = legend.concat(`</div></form>`);
 document.getElementById("legend").innerHTML = legend;
+
+/*
+    <div class="legend-item">
+                                <input type="radio" id="${id_name}" name="layer" value="${key}" />
+                                <label for="${id_name}">
+                                    <span class="dot" style="background-color:${value}"></span>
+                                    <p>${key}</p>
+                                </label>    
+                            </div>
+*/ 
