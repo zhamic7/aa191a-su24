@@ -14,15 +14,17 @@ main {
     display: flex;
     flex-flow: column;  
     align-content: start;
+    height: 120vh;
       
 }
 
 .col2 {
     grid-area: col2;
     background-color: paleturquoise;
-    overflow: auto;
+    overflow: scroll;
     align-content: start;
-    height: 100vh;
+    height: 120vh;
+    overflow-y: auto;
 }
 
 .title {
@@ -94,11 +96,14 @@ main {
     position: sticky; 
     top: 0;
     background: lavender;
+    margin-bottom: 1vw;
 }
 
 .card {
     background-color: white;
-    margin: 1vw;
+    margin-right: 2vw;
+    margin-left: 1vw;
+    margin-bottom: 1vw;
     border: solid;
     border-width: 2px;
     border-color: black;
