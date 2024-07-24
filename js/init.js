@@ -1,9 +1,118 @@
+/*** Scripts for index.html ***/
+
+function createButtons(){
+    const location_keys = Object.keys(locations); // Returns [ "Gym", "Tennis Court", "Pool", "Panther Stadium", "Soccer Field", "Borchard Community Park" ]
+    location_keys.push("Default View"); 
+    location_keys.forEach( (key) => 
+        {
+            let lat = mapZoom.lat;
+            let lon = mapZoom.lon;
+            let zoom = mapZoom.zoom;
+            if (key !== "Default View") {
+                lat = locations[key].lat;
+                lon = locations[key].lon;
+                zoom = 19;
+            }
+            
+            const newButton = document.createElement("button"); 
+            newButton.className = "zoom";
+            newButton.id = key.split(' ')[0]; // Get first word only of key
+            newButton.innerHTML = `<p class="zoom-label">${key.toUpperCase()}</p>`; 
+            newButton.setAttribute("lat", lat); 
+            newButton.setAttribute("lon", lon); 
+            newButton.addEventListener('click', function(){
+                map.flyTo({
+                    center: [lon, lat], 
+                    zoom: zoom,
+                }); 
+                console.log(newButton.id);
+            });
+            document.getElementById("filter").appendChild(newButton); 
+            console.log(key + ", lat: " + lat + ", lon: " + lon);
+        }
+    ); 
+}
+
+function createCustomIcon (caption, latlng, color) {
+    // Create a DOM element for the marker
+    const el = document.createElement('div');
+    el.style.backgroundImage = 'url(images/my-icon.png)';
+    el.style.backgroundSize = '50px';
+    el.style.width = '50px'; // iconSize width
+    el.style.height = '50px'; // iconSize height
+    el.style.display = 'block';
+    el.style.borderRadius = '50%'; // Optional: makes the icon circular
+    el.style.border = "2px solid";
+    el.style.borderColor = color;
+    el.style.backgroundColor = color;
+    //el.style.boxShadow = '0px 0px 20px rgba(0, 0, 0, 0.5)'; // Optional: adds shadow effect
+    
+    return new maplibregl.Marker({element: el})
+        .setLngLat(latlng)
+        .setPopup(new maplibregl.Popup({ offset: 25 }) // Add popups
+        .setHTML(caption));
+}
+
+function checkPlace(place) {
+    if(structures.has(place)) {
+        clusters[place] = clusters[place] + 1;
+    }
+    else {
+        structures.add(place);
+        clusters[place] = 0;
+    }
+}
+
+function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
+    checkPlace(place);
+    let offset = clusters[place];
+    let lat = locations[place].lat + 0.00003 * offset * Math.sin(offset * Math.PI/4);
+    let lon = locations[place].lon + 0.00003 * offset * Math.cos(offset * Math.PI/4);
+
+    let stories = `<p style="font-weight:bold;">During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? <\p>
+                    <p>${water_src}</p>
+                    <br>
+                    <p style="font-weight:bold;">In regards to the previous question, what is the reason for your preference (or lack thereof)? </p>
+                    <p>${water_src_desc}</p>
+                    <br>
+                    <p style="font-weight:bold;">Do you think there are enough clean and reliable water fountains at NPHS during sports practices? </p>
+                    <p>${clean}</p>
+                    <br>
+                    <p style="font-weight:bold;">In regards to the previous question, why do you feel this way? </p>
+                    <p>${clean_desc}</p>`;
+
+    this.caption = `<div class="mapPopup">
+                        <div class="popupTitle">
+                            <h2 style="font-size:16px;">Response from ${place}, (${time})</h2>
+                        </div>
+                        <p style="margin-top: 7px;">${stories}</p>
+                    </div>`;
+    this.coords = [lon, lat];
+    this.category_color = legend_colors[place];
+}
+
+
 function processData(data) {
-    console.log(data);
+    let places = [];
+    for (let i = 0; i < data.length; i++) {
+        let tmp = data[i];
+        let show = tmp["Are you in Grades 9-12, and do you attend Newbury Park High School as a student athlete?"];        
+        if (show === "Yes") {    
+            places.push(new Place(tmp["Timestamp"],
+                                        tmp["Which of the following places do you spend the most time at for your sport?"],
+                                        tmp["During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? "],
+                                        tmp["In regards to the previous question, what is the reason for your preference (or lack thereof)? "],
+                                        tmp["Do you think there are enough clean and reliable water fountains at NPHS during sports practices? "],
+                                        tmp["In regards to the previous question, why do you feel this way? "],
+                ));
+        }
+    }
+    console.log(places);
+    places.forEach(place => createCustomIcon(place.caption, place.coords).addTo(map) );
 }
 
 // Declare data structures
-const buildings = new Set();
+const structures = new Set();
 let clusters = new Object();
 
 const legend_colors = {
@@ -14,14 +123,13 @@ const legend_colors = {
 }
 
 const locations = {
-    "Gym" : { lat: 0, lon : 0}, 
-    "Tennis Court" : { lat: 0, lon : 0}, 
-    "Pool" : { lat: 0, lon : 0}, 
-    "Panther Stadium" : { lat: 0, lon : 0}, 
-    "Soccer Field" : { lat: 5, lon : 0}, 
-    "Borchard Community Park" : { lat: 0, lon : 0 }
+    "Gym" : { lat: 34.185171, lon : -118.953065 }, 
+    "Tennis Court" : { lat: 34.185868, lon : -118.952700 }, 
+    "Pool" : { lat: 34.185143, lon : -118.952646 }, 
+    "Panther Stadium" : { lat: 34.185868, lon : -118.951070 }, 
+    "Soccer Field" : { lat: 34.184606, lon : -118.950419 }, 
+    "Borchard Community Park" : { lat: 34.180785, lon : -118.950527 }
 }
-console.log("The latitude of the field is " + locations["Soccer Field"].lat); // Test
 
 // Declare variables
 let mapZoom = {
@@ -33,7 +141,7 @@ let mapZoom = {
 // Create map and add markers
 const map = new maplibregl.Map({
     container: 'map', // container ID
-    style: 'https://api.maptiler.com/maps/dataviz/style.json?key=aRyJfnj25CKYN2noi9Wt', // Your style URL
+    style: 'https://api.maptiler.com/maps/satellite/style.json?key=aRyJfnj25CKYN2noi9Wt', // Your style URL
     center: [mapZoom.lon, mapZoom.lat], // Starting position [lng, lat]
     zoom: mapZoom.zoom // Starting zoom level
 });
@@ -52,6 +160,8 @@ map.on('load', function() {
         }
     });
 });
+
+createButtons();
 
 let legend = `<div><p style="font-weight: bold; margin-bottom:10px;">Legend</p></div>`;
 for (const [key, value] of Object.entries(legend_colors)) {
