@@ -1,5 +1,6 @@
 /*** Scripts for index.html ***/
 
+///////////////////////// FUNCTIONS /////////////////////////
 function filter(tag) {
     console.log(tag);
     let cards = document.getElementsByClassName("card");
@@ -106,6 +107,7 @@ function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
     let offset = clusters[place];
     let lat = locations[place].lat + 0.00003 * offset * Math.sin(offset * Math.PI/4);
     let lon = locations[place].lon + 0.00003 * offset * Math.cos(offset * Math.PI/4);
+    water_src = water_src.split(' ')[0];
 
     let stories = `<p style="font-weight:bold;">During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? <\p>
                     <p>${water_src}</p>
@@ -124,7 +126,7 @@ function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
                     </div>
                     <p style="margin-top: 7px;">${stories}</p>`;
     this.coords = [lon, lat];
-    this.category_color = legend_colors[place];
+    this.category_color = legend_colors[water_src];
 
     createCard(place, this.caption);
 }
@@ -160,9 +162,10 @@ function processData(data) {
                 ));
         }
     }
-    console.log(places);
-    places.forEach(place => createCustomIcon(place.caption, place.coords).addTo(map) );
+    places.forEach(place => createCustomIcon(place.caption, place.coords, place.category_color).addTo(map) );
 }
+
+///////////////////////// MAIN /////////////////////////
 
 // Declare data structures
 const structures = new Set();
@@ -170,8 +173,8 @@ let clusters = new Object();
 
 const legend_colors = {
     "Select All" : "#bfd7ed",
-    "Off-Campus": "#60a3d9",
-    "On-Campus" : "#0074b7",
+    "Off-campus": "#60a3d9",
+    "On-campus" : "#0074b7",
     "Both": "#003b73",
 }
 
