@@ -1,0 +1,13 @@
+@import "style.css";
+
+/* Defines the page layout using a grid */
+main {
+    grid-area: main;
+}
+
+#survey {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    flex: 1 1 auto;
+}

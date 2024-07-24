@@ -1,4 +1,4 @@
-# aa191a-su24
+# aa191a-su24 ****REWRITE!***
 
 ## What social problem is being addressed? 
 > We are planning to investigate accessibility to clean water in Skid Row (a neighborhood in downtown Los Angeles). Clean water access can be heavily restricted when urban planning fails to take into account where clean water is needed and how to avoid contamination during distribution, which disporportionality impacts low-income housing families. 

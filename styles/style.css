@@ -1,0 +1,72 @@
+/* The * selects everything and acts as a global reset to ensure consistency across browsers */
+* {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sets the overall background and ensures the content fits the screen height */
+html {
+    background-color: white;
+}
+
+html,
+body {
+    height: 145vh;
+}
+
+body {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr 7vh;
+    /* Adjusted to reflect the simplified structure */
+}
+
+header {
+    grid-area: header;
+    background-color: #003b73;
+    color: white;
+    padding: 10px;
+
+    display: grid;
+    grid-template-areas:
+        "title"
+        "navbar";
+    grid-template-rows: 20vh 10vh;
+}
+
+#title {
+    grid-area: title;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#navbar {
+    grid-area: navbar;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redirect {
+    color: white;
+    margin: 5px;
+}
+
+#footer {
+    grid-area: footer;
+    background-color: #003b73;
+    color: white;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
