@@ -127,15 +127,31 @@ function processData(data) {
         let tmp = data[i];
         let show = tmp["Are you in Grades 9-12, and do you attend Newbury Park High School as a student athlete?"];        
         if (show === "Yes") {    
+            let waterSource = tmp["During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? "];
+            let markerCategory;
+
+            switch (waterSource) {
+                case "Off-campus (e.g., water from home, local stores, etc.)":
+                    markerCategory = 'off-campus';
+                    break;
+                case "On-campus (water fountains)":
+                    markerCategory = 'on-campus';
+                    break;
+                case "Both":
+                    markerCategory = 'both';
+                    break;
+            }
+
             places.push(new Place(tmp["Timestamp"],
                                         tmp["Which of the following places do you spend the most time at for your sport?"],
-                                        tmp["During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? "],
+                                        waterSource,
                                         tmp["In regards to the previous question, what is the reason for your preference (or lack thereof)? "],
                                         tmp["Do you think there are enough clean and reliable water fountains at NPHS during sports practices? "],
                                         tmp["In regards to the previous question, why do you feel this way? "],
                 ));
         }
     }
+    console.log(places);
     places.forEach(place => createCustomIcon(place.caption, place.coords).addTo(map) );
 }
 
