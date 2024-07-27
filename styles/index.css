@@ -109,10 +109,38 @@ label {
 }
 
 #filter {
-    position: sticky; 
-    top: 0;
-    background: lavender;
-    margin-bottom: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; 
+    justify-content: center; 
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* Button styling */
+#filter button {
+    background-color: #ffe41b; 
+    border: none; 
+    border-radius: 12px; /* Curved corners */
+    padding: 12px 24px; 
+    font-size: 14px; 
+    font-weight: bold; 
+    color: #333;
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 4px 8px rgb(194, 141, 17); /* Rectangle shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Button hover effect */
+#filter button:hover {
+    background-color: #e4d561; 
+    transform: translateY(-2px); /* Lift the button slightly */
+}
+
+/* Button active effect */
+#filter button:active {
+    background-color: #e4d561; 
+    transform: translateY(0); /* Button returns to original position */
 }
 
 .card {
