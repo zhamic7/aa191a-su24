@@ -277,13 +277,3 @@ for (const [key, value] of Object.entries(legend_colors)) {
 }
 legend = legend.concat(`</div></form>`);
 document.getElementById("legend").innerHTML = legend;
-
-/*
-    <div class="legend-item">
-                                <input type="radio" id="${id_name}" name="layer" value="${key}" />
-                                <label for="${id_name}">
-                                    <span class="dot" style="background-color:${value}"></span>
-                                    <p>${key}</p>
-                                </label>    
-                            </div>
-*/ 
