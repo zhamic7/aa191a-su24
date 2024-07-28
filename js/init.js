@@ -67,7 +67,7 @@ function createCustomIcon (caption, latlng, color) {
     // Create a DOM element for the marker
     const el = document.createElement('div');
 
-    const imageWidthPx = "38px"; 
+    const imageWidthPx = "50px"; 
     const imageHeightPx = 'auto'; // 'auto' to maintain aspect ratio
 
     el.style.backgroundImage = 'url(images/water-droplet.png)';
@@ -78,16 +78,17 @@ function createCustomIcon (caption, latlng, color) {
     el.style.display = 'block';
     el.style.borderRadius = '50%'; // Optional: makes the icon circular
     el.style.border = "2px solid";
-    el.style.borderColor = color;
+    el.style.borderColor = "black";
     el.style.backgroundColor = color;
-    el.style.boxShadow = '0px 0px 20px rgba(255, 255, 255, 0.5)'; // White shadow effect
+    //el.style.boxShadow = '0px 0px 20px rgba(255, 255, 255, 0.5)'; // White shadow effect
 
     return new maplibregl.Marker({element: el})
         .setLngLat(latlng)
         .setPopup(new maplibregl.Popup({ offset: 25 }) // Add popups
         .setHTML(`<div class="mapPopup">
                         <div class="popupTitle">${caption}</div>
-                    </div>`));
+                    </div>`).setMaxWidth("30vw"))
+        ;
 }
 
 function createCard(tag, content) {
@@ -122,9 +123,9 @@ function addMarker(latlng) {
     el.style.height = '50px';
     el.style.backgroundImage = `url(${imagePath})`;
     el.style.backgroundSize = 'cover';
-    el.style.backgroundColor = '#2F2F2F'; // dark grey
+    el.style.backgroundColor = '#AFAFAF'; // dark grey
     el.style.backgroundPosition = 'center';
-    el.style.borderRadius = '50%';
+    //el.style.borderRadius = '50%';
     el.style.border = '2px solid black';
 
     const triangle = document.createElement('div');
@@ -146,12 +147,17 @@ function addMarker(latlng) {
         .addTo(map);
 }
 
+var months = [ "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December" ];
+
+
 function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
     checkPlace(place);
     let offset = clusters[place];
     let lat = locations[place].lat + 0.00003 * offset * Math.sin(offset * Math.PI/4);
     let lon = locations[place].lon + 0.00003 * offset * Math.cos(offset * Math.PI/4);
     water_src = water_src.split(' ')[0];
+    time = time.split(' ')[0].split('/');
 
     let stories = `<p style="font-weight:bold;">During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? <\p>
                     <p>${water_src}</p>
@@ -165,14 +171,29 @@ function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
                     <p style="font-weight:bold;">In regards to the previous question, why do you feel this way? </p>
                     <p>${clean_desc}</p>`;
 
-    this.caption = `<div class="popupTitle">
-                            <h2 style="font-size:16px;">Response from ${place}, (${time})</h2>
-                    </div>
-                    <p style="margin-top: 7px;">${stories}</p>`;
+    let stories_short = `<p>During sports practices, I mostly rely on
+                            <span style="font-weight:bold;"> ${water_src.toLowerCase()} </span>
+                        water sources. 
+                        </p>
+                        <p style="margin: 0.5vh 1vw;">Reasoning:
+                            <span style="font-weight:bold;"> ${water_src_desc}</span>
+                        </p>
+                        <p>I think there 
+                            <span style="font-weight:bold;"> are ${(clean === "Yes") ? "" : " not"}</span>
+                            enough clean and reliable water fountains at NPHS during sports practices.
+                        </p>
+                        <p style="margin: 0.5vh 1vw;">Reasoning:
+                            <span style="font-weight:bold;"> ${clean_desc}</span>
+                        </p>`;
+    let title = `<div class="popupTitle">
+                            <p style="font-size:16px; font-weight:bold;">Response from ${place}, (${months[time[0]]} ${time[2]})</p>
+                </div>`
+    this.card = title + `<p style="margin-top: 7px;">${stories}</p>`;
+    this.caption = title + `<p style="margin-top: 7px;">${stories_short}</p>`;
     this.coords = [lon, lat];
     this.category_color = legend_colors[water_src];
 
-    createCard(place, this.caption);
+    createCard(place, this.card);
 }
 
 
