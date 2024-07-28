@@ -20,7 +20,7 @@ main {
 
 .col2 {
     grid-area: col2;
-    background-color: paleturquoise;
+    background-color: rgb(155, 198, 220);
     overflow: scroll;
     align-content: start;
     height: 120vh;
@@ -46,7 +46,6 @@ main {
     margin-top: 20px;
     margin-left: 20px;
     z-index: 1;
-
     width: 250px;
     background: #fff;
     border: solid;
@@ -55,15 +54,27 @@ main {
     border-radius: 5px;
     color: black;
     padding: 10px;
-    height: 180px;
+    height: auto;
+}
+
+#legend h1 {
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .legend-item {
     display: flex;
-    flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
-    cursor: pointer;
+}
+
+.legend-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.legend-item label {
+    display: flex;
+    align-items: center;
 }
 
 .dot {
@@ -75,12 +86,8 @@ main {
     border: 1px solid #000;
 }
 
-.dot.checked {
-    background-color: #747474;
-}
-
-.legend-item p {
-    margin: 0;
+.legend-item span {
+    margin-left: 10px;
 }
 
 label {
