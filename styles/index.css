@@ -154,3 +154,10 @@ label {
     border-radius: 2.5%;
     padding: 1vw;
 }
+
+/* Typography */
+
+main h2 {
+    margin-top: 20px;
+    margin-left: 20px;
+}
