@@ -66,8 +66,13 @@ function createButtons(){
 function createCustomIcon (caption, latlng, color) {
     // Create a DOM element for the marker
     const el = document.createElement('div');
-    el.style.backgroundImage = 'url(images/my-icon.png)';
-    el.style.backgroundSize = '50px';
+
+    const imageWidthPx = "38px"; 
+    const imageHeightPx = 'auto'; // 'auto' to maintain aspect ratio
+
+    el.style.backgroundImage = 'url(images/water-droplet.png)';
+    el.style.backgroundPosition = 'center'; // Center the image within the icon    
+    el.style.backgroundSize = `${imageWidthPx} ${imageHeightPx}`; // Set image width and height    
     el.style.width = '50px'; // iconSize width
     el.style.height = '50px'; // iconSize height
     el.style.display = 'block';
@@ -75,8 +80,8 @@ function createCustomIcon (caption, latlng, color) {
     el.style.border = "2px solid";
     el.style.borderColor = color;
     el.style.backgroundColor = color;
-    //el.style.boxShadow = '0px 0px 20px rgba(0, 0, 0, 0.5)'; // Optional: adds shadow effect
-    
+    el.style.boxShadow = '0px 0px 20px rgba(255, 255, 255, 0.5)'; // White shadow effect
+
     return new maplibregl.Marker({element: el})
         .setLngLat(latlng)
         .setPopup(new maplibregl.Popup({ offset: 25 }) // Add popups
@@ -100,6 +105,45 @@ function checkPlace(place) {
         structures.add(place);
         clusters[place] = 0;
     }
+}
+
+// water fountain markers
+const coordinates = [
+    [34.18518367221783, -118.95283325589428],
+    [34.18324442509275, -118.9525757638468],
+    [34.18329323964055, -118.95214661043437]
+];
+
+const imagePath = 'images/water-fountain.png';
+
+function addMarker(latlng) {
+    const el = document.createElement('div');
+    el.style.width = '50px';
+    el.style.height = '50px';
+    el.style.backgroundImage = `url(${imagePath})`;
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundColor = '#D2B48C'; // saddle-brown  
+    el.style.backgroundPosition = 'center';
+    el.style.borderRadius = '50%';
+    el.style.border = '2px solid black';
+
+    const triangle = document.createElement('div');
+    triangle.style.position = 'absolute';
+    triangle.style.bottom = '-12px'; 
+    triangle.style.left = '50%';
+    triangle.style.width = '0';
+    triangle.style.height = '0';
+    triangle.style.borderLeft = '10px solid transparent'; 
+    triangle.style.borderRight = '10px solid transparent';
+    triangle.style.borderTop = '12px solid black'; 
+    triangle.style.transform = 'translateX(-50%)'; 
+
+
+    el.appendChild(triangle);
+
+    new maplibregl.Marker({ element: el })
+        .setLngLat([latlng[1], latlng[0]])
+        .addTo(map);
 }
 
 function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
@@ -164,6 +208,61 @@ function processData(data) {
     }
     places.forEach(place => createCustomIcon(place.caption, place.coords, place.category_color).addTo(map) );
 }
+
+function createCheckboxForCategory(category, filterGroup) {
+    // Create a container for the checkbox, label, and markerLegend
+    const container = document.createElement('div');
+    container.style.display = 'grid';
+    container.style.gridTemplateColumns = 'auto auto 1fr'; // Define the grid columns
+    container.style.alignItems = 'center'; // Align items vertically in the center
+    container.style.gap = '8px'; // Add some space between the items
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = category;
+    input.checked = true;
+
+    const label = document.createElement('label');
+    label.setAttribute('for', category);
+    label.textContent = category;
+
+    const markerLegend = document.createElement('div');
+    markerLegend.className = `marker marker-${category}`;
+
+    // Append the elements to the container instead of directly to the filterGroup
+    container.appendChild(input);
+    container.appendChild(label);
+    container.prepend(markerLegend);
+
+    // Append the container to the filterGroup
+    filterGroup.appendChild(container);
+
+    input.addEventListener('change', function(event) {
+        toggleMarkersVisibility(category, event.target.checked);
+    });
+}
+
+
+function createFilterUI() {
+    const categories = ['On-campus', 'Off-campus', 'Both'];
+    const filterGroup = document.getElementById('filter-group') || document.createElement('div');
+    filterGroup.setAttribute('id', 'filter-group');
+    filterGroup.className = 'filter-group';
+    document.getElementById("legend").appendChild(filterGroup);
+
+    categories.forEach(category => {
+        createCheckboxForCategory(category, filterGroup);
+    });
+}
+
+function toggleMarkersVisibility(category, isVisible) {
+    const markers = document.querySelectorAll(`.marker-${category}`);
+    markers.forEach(marker => {
+        marker.style.display = isVisible ? '' : 'none';
+    });
+}
+
+createFilterUI();
 
 ///////////////////////// MAIN /////////////////////////
 
@@ -252,6 +351,11 @@ const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQaYYp3qBhE2S8S
 
 // When the map is fully loaded, start adding GeoJSON data
 map.on('load', function() {
+    coordinates.forEach(coord => addMarker(coord));
+
+    // Existing functionalities
+    createFilterUI();
+    
     // Use PapaParse to fetch and parse the CSV data from a Google Forms spreadsheet URL
     Papa.parse(dataUrl, {
         download: true, // Tells PapaParse to fetch the CSV data from the URL
