@@ -122,7 +122,7 @@ function addMarker(latlng) {
     el.style.height = '50px';
     el.style.backgroundImage = `url(${imagePath})`;
     el.style.backgroundSize = 'cover';
-    el.style.backgroundColor = '#D2B48C'; // saddle-brown  
+    el.style.backgroundColor = '#2F2F2F'; // dark grey
     el.style.backgroundPosition = 'center';
     el.style.borderRadius = '50%';
     el.style.border = '2px solid black';
