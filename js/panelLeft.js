@@ -1,6 +1,6 @@
 import { locations, legend_colors } from "./constants.js";
 
-let surveyCoreQuestionArray = [];
+
 
 // Step 2: Create an array of words with their count
 const words = [

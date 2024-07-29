@@ -34,20 +34,3 @@ export function filterCards(tag) {
         }
     }
 }
-
-export function createButtons(){ // delete later
-    const location_keys = Object.keys(locations); // Returns [ "Gym", "Tennis Court", "Pool", "Panther Stadium", "Soccer Field", "Borchard Community Park" ]
-    location_keys.unshift("View All"); 
-    location_keys.forEach( (key) => 
-        {            
-            const newButton = document.createElement("button"); 
-            newButton.className = "zoom";
-            newButton.innerHTML = `<p class="zoom-label">${key.toUpperCase()}</p>`; 
-            newButton.addEventListener('click', function(){
-                let tag = key.split(' ')[0]; // Get first word only of key
-                filterCards(tag);
-            });
-            document.getElementById("filter").appendChild(newButton); 
-        }
-    ); 
-}
