@@ -13,7 +13,7 @@ html {
 
 html,
 body {
-    height: 145vh;
+    height: 100vh;
 }
 
 body {
@@ -69,4 +69,17 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+/* new word cloud styles */
+.word-cloud {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+.word {
+    position: absolute;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
 }

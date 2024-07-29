@@ -4,26 +4,31 @@
 main {
     grid-area: main;
     display: grid;
-    grid-template-areas: "col1 col2";
-    grid-template-columns: 3fr 1.5fr;
+    grid-template-areas: "col1 col2 col3";
+    grid-template-columns: 1.5fr 3fr 1.5fr;
 }
 
-/* Assigns each major section to a part of the grid */
 .col1 {
     grid-area: col1;
+    overflow: scroll;
+
+}
+/* Assigns each major section to a part of the grid */
+.col2 {
+    grid-area: col2;
     display: flex;
     flex-flow: column;  
     align-content: start;
-    height: 120vh;
+    height: 100vh;
       
 }
 
-.col2 {
-    grid-area: col2;
+.col3 {
+    grid-area: col3;
     background-color: rgb(155, 198, 220);
     overflow: scroll;
     align-content: start;
-    height: 120vh;
+    height: 100vh;
     overflow-y: auto;
 }
 
@@ -46,7 +51,7 @@ main {
     margin-top: 20px;
     margin-left: 20px;
     z-index: 1;
-    width: 250px;
+    width: 10vw;
     background: #fff;
     border: solid;
     border-color: black;
