@@ -140,9 +140,10 @@ map.on('load', function() {
     createFilterUI();
 
     // Create polygons
-    fetch("../locations.geojson") // fetch geojson data
+    fetch("js/locations.geojson") // fetch geojson data
     .then(polygons => { return polygons.json(); }) // check data
     .then(polygons => { // process data
+        console.log(polygons);
         polygons.features.forEach(poly => {
             let polygon_name = poly.properties.name;
             map.addSource(polygon_name, {
