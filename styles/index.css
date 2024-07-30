@@ -1,6 +1,62 @@
 @import "style.css";
 
-/* Defines the page layout using a grid */
+/* General section styling */
+#intro {
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.intro-row1 {
+    margin-bottom: 20px;
+}
+
+.intro-title h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.intro-title p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.intro-row2 {
+    display: flex;
+    gap: 20px;
+}
+
+.intro-col1, .intro-col2 {
+    flex: 1;
+}
+
+.intro-col1 {
+    background-color: white;
+    border: black;
+}
+
+.intro-col2 {
+    background-color: white;
+}
+
+/* word cloud styles */
+.word-cloud {
+    width: 700px;
+    height: 300px;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff762; /* Background color for visibility */
+}
+
+.word {
+    position: absolute;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+}
+
+/* map and side panel */
 main {
     grid-area: main;
     display: grid;

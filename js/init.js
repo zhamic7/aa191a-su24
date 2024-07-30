@@ -2,7 +2,7 @@ import { locations, legend_colors } from "./constants.js";
 import { createCard, filterCards, createButtons } from "./panelRight.js";
 import { Place, processData } from "./dataProcessing.js";
 import { createCustomIcon, addMarker } from "./mapLayout.js";
-import { createWordCloud } from "./panelLeft.js";
+import { createWordCloud } from "./panelTop.js";
 
 let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0}; // can put into processData function to edit -- see line 145-146
 
