@@ -5,9 +5,11 @@
     padding: 20px;
     background-color: #f9f9f9;
     margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
 }
 
-.intro-row1 {
+.intro-title {
     margin-bottom: 20px;
 }
 
@@ -20,11 +22,6 @@
     margin: 5px 0;
     font-size: 16px;
     color: #333;
-}
-
-.intro-row2 {
-    display: flex;
-    gap: 20px;
 }
 
 .intro-col1, .intro-col2 {
@@ -61,31 +58,27 @@ main {
     grid-area: main;
     display: grid;
     grid-template-areas: "col1 col2 col3";
-    grid-template-columns: 1.5fr 3fr 1.5fr;
+    grid-template-columns: 0.5fr 3fr 1.5fr 0.5fr;
+    margin: 1rem;
 }
 
-.col1 {
-    grid-area: col1;
-    overflow: scroll;
-
-}
 /* Assigns each major section to a part of the grid */
-.col2 {
+.main-col2 {
     grid-area: col2;
     display: flex;
     flex-flow: column;  
     align-content: start;
     height: 100vh;
-      
 }
 
-.col3 {
+.main-col3 {
     grid-area: col3;
     background-color: rgb(155, 198, 220);
     overflow: scroll;
     align-content: start;
     height: 100vh;
     overflow-y: auto;
+    margin-left: 1rem;
 }
 
 .title {
@@ -95,9 +88,7 @@ main {
 #map {
     flex: 1 1 auto;
     border-style: solid;
-    border-width: 0.25ch;
-
-    margin: 10px;
+    border-width: 3px;
 }
 
 #legend {
@@ -107,8 +98,8 @@ main {
     margin-top: 20px;
     margin-left: 20px;
     z-index: 1;
-    width: 10vw;
-    background: #fff;
+    width: 230px;
+    background: white;
     border: solid;
     border-color: black;
     border-width: 2px;
@@ -138,13 +129,12 @@ main {
     align-items: center;
 }
 
-.dot {
+.square {
     height: 25px;
     width: 25px;
-    border-radius: 50%;
     display: inline-block;
-    margin-right: 10px;
-    border: 1px solid #000;
+    margin-right: 15px;
+    border: 1.5px solid black;
 }
 
 .legend-item span {
@@ -179,29 +169,49 @@ label {
 #panel-info {
     position: sticky;
     top: 0;
-    background-color: rgb(155, 198, 220, 1);
+    background-color: rgb(182, 222, 243);
 
     display: flex;
     flex-direction: column; 
     text-align: center;
     padding: 20px;
     margin-bottom: 1vw;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: black;
     z-index: 1;
+}
+
+/* Button styling */
+#btn {
+    background-color: #ffe41b; 
+    border: none; 
+    border-radius: 12px; /* Curved corners */
+    padding: 5px; 
+    margin-top: 10px;
+    font-weight: bold; 
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 2px 2px rgb(194, 141, 17); /* Rectangle shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Button hover effect */
+#btn:hover {
+    background-color: #e4d561; 
+    transform: translateY(-2px); /* Lift the button slightly */
+}
+
+/* Button active effect */
+#btn:active {
+    background-color: #e4d561; 
+    transform: translateY(0); /* Button returns to original position */
 }
 
 .card {
     background-color: white;
-    margin-right: 2vw;
-    margin-left: 1vw;
-    margin-bottom: 1vw;
+    margin: 0 1rem 1rem 1rem;
     border: solid;
     border-width: 5px;
     border-color: black;
     border-radius: 2.5%;
-    padding: 1vw;
+    padding: 1rem;
 }
 
 #panel-end {

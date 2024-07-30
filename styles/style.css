@@ -24,7 +24,7 @@ body {
         "intro"
         "main"
         "footer";
-    grid-template-rows: auto 1fr 1fr auto; /* Adjust according to the layout needs */
+    grid-template-rows: 1fr 1fr 1fr auto; /* Adjust according to the layout needs */
     height: 100vh; /* Ensure the grid takes up the full viewport height */
     margin: 0;
 }
@@ -39,7 +39,7 @@ header {
     grid-template-areas:
         "title"
         "navbar";
-    grid-template-rows: 20vh 10vh;
+    grid-template-rows: 15vh 10vh;
 }
 
 #title {

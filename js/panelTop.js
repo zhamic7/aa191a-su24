@@ -1,4 +1,4 @@
-import { locations, legend_colors } from "./constants.js";
+import { locations, response_colors } from "./constants.js";
 
 const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQaYYp3qBhE2S8SJcR2U16WsMNcd-Ipxv9DDzgfRLkRVTYH8OGXXqX-vHreP9dLtdtq0Dp-UDh3eiaU/pub?output=csv";
 

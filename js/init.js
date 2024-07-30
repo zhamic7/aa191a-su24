@@ -1,4 +1,4 @@
-import { locations, legend_colors } from "./constants.js";
+import { locations, legend_colors, response_colors } from "./constants.js";
 import { createCard, filterCards } from "./panelRight.js";
 import { Place, processData } from "./dataProcessing.js";
 import { addMarker } from "./mapLayout.js";
@@ -9,105 +9,6 @@ let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0};
     -- see lines "let responses = processData(results.data, surveyCoreQuestionArray); // Use a new function to handle CSV data
                     console.log(surveyCoreQuestionArray);" */
 
-///////////////////////// FUNCTIONS /////////////////////////
-function createCheckboxForCategory(category, filterGroup) {
-    // Create a container for the checkbox, label, and markerLegend
-    const container = document.createElement('div');
-    container.style.display = 'grid';
-    container.style.gridTemplateColumns = 'auto auto 1fr'; // Define the grid columns
-    container.style.alignItems = 'center'; // Align items vertically in the center
-    container.style.gap = '8px'; // Add some space between the items
-
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.id = category;
-    input.checked = true;
-
-    const label = document.createElement('label');
-    label.setAttribute('for', category);
-    label.textContent = category;
-
-    const markerLegend = document.createElement('div');
-    markerLegend.className = `marker marker-${category}`;
-
-    // Append the elements to the container instead of directly to the filterGroup
-    container.appendChild(input);
-    container.appendChild(label);
-    container.prepend(markerLegend);
-
-    // Append the container to the filterGroup
-    filterGroup.appendChild(container);
-
-    input.addEventListener('change', function(event) {
-        toggleMarkersVisibility(category, event.target.checked);
-    });
-}
-
-function createFilterUI() {
-    const categories = ['On-campus', 'Off-campus', 'Both'];
-    const filterGroup = document.getElementById('filter-group') || document.createElement('div');
-    filterGroup.setAttribute('id', 'filter-group');
-    filterGroup.className = 'filter-group';
-    document.getElementById("legend").appendChild(filterGroup);
-
-    categories.forEach(category => {
-        createCheckboxForCategory(category, filterGroup);
-    });
-}
-
-function toggleMarkersVisibility(category, isVisible) {
-    const markers = document.querySelectorAll(`.marker-${category}`);
-    markers.forEach(marker => {
-        marker.style.display = isVisible ? '' : 'none';
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("legend").addEventListener('click', function(event) {
-        if (event.target.classList.contains('legend-item')) {
-            let category = event.target.getAttribute('data-category');
-            toggleCheckbox(event.target);
-            filterMarkers(category);
-        }
-    });
-});
-
-function toggleCheckbox(item) {
-    let dot = item.querySelector('.dot');
-    dot.classList.toggle('checked');
-}
-
-function filterMarkers(category) {
-    map.eachLayer(function(layer) {
-        if (layer instanceof maplibregl.Marker) {
-            let markerCategory = layer.options.category;
-
-            let showMarker = true;
-
-            switch (category) {
-                case 'Select All':
-                    // show all markers
-                    break;
-                case 'Off-Campus':
-                    showMarker = (markerCategory === 'off-campus');
-                    break;
-                case 'On-Campus':
-                    showMarker = (markerCategory === 'on-campus');
-                    break;
-                case 'Both':
-                    showMarker = (markerCategory === 'both');
-                    break;
-            }
-
-            if (showMarker) {
-                layer.addTo(map)
-            } else {
-                map.removeLayer(layer);
-            }
-        }
-    });
-}
-
 ///////////////////////// MAIN /////////////////////////
 
 // Create word cloud
@@ -115,9 +16,9 @@ createWordCloud();
 
 // Create map and add markers
 const mapZoom = {
-    "lat": 34.18274035884417, 
-    "lon": -118.95138684698637,
-    "zoom": 15.5
+    "lat": 34.18334035884417, 
+    "lon": -118.95258684698637,
+    "zoom": 16
 }
 const map = new maplibregl.Map({
     container: 'map', // container ID
@@ -136,14 +37,10 @@ map.on('load', function() {
     ];
     waterftn_coords.forEach(coord => addMarker(coord).addTo(map) );
 
-    // Existing functionalities
-    createFilterUI();
-
     // Create polygons
     fetch("js/locations.geojson") // fetch geojson data
     .then(polygons => { return polygons.json(); }) // check data
     .then(polygons => { // process data
-        console.log(polygons);
         polygons.features.forEach(poly => {
             let polygon_name = poly.properties.name;
             map.addSource(polygon_name, {
@@ -187,10 +84,22 @@ map.on('load', function() {
 // Create map legend
 let legend = `<form><div><p style="font-weight: bold; margin-bottom:10px;">Legend</p>`;
 for (const [key, value] of Object.entries(legend_colors)) {
+    let image = `background-color: ${value};`;
+    if (key === "Water Fountains") {
+        image = `background-color: ${value}; background-image: url('images/water-fountain.png'); background-size: contain;`
+    }
     legend = legend.concat(`<div class="legend-item">
-                                <span class="dot" style="background-color:${value}"></span>
-                                <p>${key}</p>   
+                                <span style="${image}" class="square" ></span>
+                                <p style="font-size: 14px;">${key}</p>   
                             </div>`);
 }
-legend = legend.concat(`</div></form>`);
+legend = legend.concat(`<ul style="font-size:13px;display:inline-block; margin-left: 60px; margin-bottom: 10px;">
+                            <li>Borchard Community Park</li>
+                            <li>Gym</li>
+                            <li>Tennis Court</li>
+                            <li>Panther Stadium</li>
+                            <li>Pool</li>
+                            <li>Soccer Field</li>
+                        </ol>
+                    </div></form>`);
 document.getElementById("legend").innerHTML = legend;

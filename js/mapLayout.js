@@ -1,4 +1,4 @@
-import { locations, legend_colors } from "./constants.js";
+import { locations, response_colors } from "./constants.js";
 
 // water fountain markers
 const imagePath = 'images/water-fountain.png';
