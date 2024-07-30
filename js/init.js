@@ -163,7 +163,7 @@ map.on('load', function() {
             });
             map.on('click', polygon_name, (e) => {
                 let tag = polygon_name.split(' ')[0]; // Get first word only of key
-                filterCards(tag);
+                filterCards(polygon_name);
             });
         });
      })
@@ -178,7 +178,7 @@ map.on('load', function() {
         complete: function(results) { // Process the parsed data
             let responses = processData(results.data, surveyCoreQuestionArray); // Use a new function to handle CSV data
             console.log(surveyCoreQuestionArray);
-            responses.forEach(place => createCard(place.place, place.card));
+            responses.forEach(place => createCard(place.place, place.card, place.category_color));
         }
     });
 });
