@@ -58,6 +58,16 @@ header {
     justify-content: center;
 }
 
+#navbar a.redirect {
+    margin: 0 15px; /* Spacing between links */
+    transition: opacity 0.3s ease; /* Smooth transition effect */
+}
+
+#navbar a.redirect:hover {
+    opacity: 0.5; /* Dim the specific link on hover */
+}
+
+
 #intro {
     grid-area: intro;
     padding: 20px;

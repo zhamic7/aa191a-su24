@@ -20,9 +20,6 @@
     <!-- PapaParse Library-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     
-    <!--Compromise Library-->
-    <script type="text/css" src="https://cdnjs.cloudflare.com/ajax/libs/compromise/13.0.0/compromise.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.1.0/src/wordcloud2.js"></script>
 </head>
 
 <body>
@@ -42,17 +39,17 @@
     <section id="intro">
             <div class="intro-col1">
                 <div class="intro-title">
-                    <h2>Title</h2>
-                    <p>Message</p>
+                    <h2>Empowering the voices of student athletes at Newbury Park High Shcool (NPHS) on water fountain conditions</h2>
+                    <p>
+                        The cleanliness and reliability of water fountains on campus play a crucial role in the health, performance, and daily experience of student athletes at NPHS. Explore the insights from the survey responses displayed on the right and use the map below to gain a deeper understanding of the community's experiences and perspectives.
+                    </p>
                 </div>
-                
-                <!-- Content for the first column -->
-                <p>Content for the first column goes here.</p>
             </div>
 
             <div class="intro-col2">
-                <!-- Word cloud for the second column -->
-                <div class="word-cloud" id="wordCloud"></div>
+                <!-- Progress bar for the second column -->
+                <script src="js/panelTop.js"></script>    
+                <div id="chart"></div>
             </div>
     </section>
 
@@ -60,24 +57,7 @@
         <div class="main-col2">
             <div id="map">
                 <!-- Map will be inserted here -->
-                <div id="legend">
-                    <div class="legend-item" data-category="Select All" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
-                        <span class="dot" style="background-color:#bfd7ed;"></span>
-                        <p>Select All</p>
-                    </div>
-                    <div class="legend-item" data-category="Off-Campus" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
-                        <span class="dot" style="background-color:#60a3d9;"></span>
-                        <p>Off-Campus</p>
-                    </div>
-                    <div class="legend-item" data-category="On-Campus" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
-                        <span class="dot" style="background-color:#0074b7;"></span>
-                        <p>On-Campus</p>
-                    </div>
-                    <div class="legend-item" data-category="Both" onclick="toggleCheckbox(this)" style ="cursor: pointer;">
-                        <span class="dot" style="background-color:#003b73;"></span>
-                        <p>Both</p>
-                    </div>
-                </div>
+                <div id="legend"></div>
             </div>
         </div>
 

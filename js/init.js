@@ -2,7 +2,6 @@ import { locations, legend_colors, response_colors } from "./constants.js";
 import { createCard, filterCards } from "./panelRight.js";
 import { Place, processData } from "./dataProcessing.js";
 import { addMarker } from "./mapLayout.js";
-import { createWordCloud } from "./panelTop.js";
 
 let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0}; 
 /* can put into processData function to edit 
@@ -10,9 +9,6 @@ let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0};
                     console.log(surveyCoreQuestionArray);" */
 
 ///////////////////////// MAIN /////////////////////////
-
-// Create word cloud
-createWordCloud();
 
 // Create map and add markers
 const mapZoom = {

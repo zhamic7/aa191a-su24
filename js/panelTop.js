@@ -1,100 +1,87 @@
-import { locations, response_colors } from "./constants.js";
+// import { locations, response_colors } from "./constants.js";
 
-const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQaYYp3qBhE2S8SJcR2U16WsMNcd-Ipxv9DDzgfRLkRVTYH8OGXXqX-vHreP9dLtdtq0Dp-UDh3eiaU/pub?output=csv";
+// progress bar 
+function createDivWithTooltip(className, id, tooltipText, widthPercentage) {
+    let div = document.createElement('div');
+    div.className = className;
+    div.id = id;
+    div.style.width = widthPercentage + '%';
 
-function fetchData(url) {
-    return fetch(url)
-        .then(response => response.text())
-        .then(csvText => Papa.parse(csvText, { header: true }));
+    let tooltip = document.createElement('span');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = tooltipText;
+    div.appendChild(tooltip);
+
+    return div;
 }
 
-function extractAdjectives(text) {
-    const doc = nlp(text);
-    return doc.adjectives().out('array');
-}
+function createOrUpdateProgressBar(elementId, yesCount, noCount) {
+    let container = document.getElementById(elementId);
 
-function processSurveyData(data) {
-    let adjectiveCounts = {};
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'progress-bar-container';
+        container.id = elementId;
 
-    data.forEach(row => {
-        const response = row['In regards to the previous question, why do you feel this way?'];
-        if (response) {
-            const adjectives = extractAdjectives(response);
-            adjectives.forEach(adj => {
-                adjectiveCounts[adj] = (adjectiveCounts[adj] || 0) + 1;
-            });
+        let header = document.createElement('h3');
+        header.textContent = 'Do student athletes think there are enough clean and reliable water fountains at NPHS during sports practices?';
+        container.appendChild(header);
+
+        let progressBarWrapper = document.createElement('div');
+        progressBarWrapper.className = 'progress-bar';
+
+        progressBarWrapper.appendChild(createDivWithTooltip('yes', 'yesBar', `Yes: ${yesCount}`, (yesCount / (yesCount + noCount)) * 100));
+        progressBarWrapper.appendChild(createDivWithTooltip('no', 'noBar', `No: ${noCount}`, (noCount / (yesCount + noCount)) * 100));
+
+        container.appendChild(progressBarWrapper);
+
+        let chart = document.getElementById('chart');
+        if (chart) {
+            chart.appendChild(container);
+        } else {
+            console.error('Element with ID "chart" not found.');
         }
-    });
+    } else {
+        let yesDiv = container.querySelector('#yesBar');
+        let noDiv = container.querySelector('#noBar');
 
-    return adjectiveCounts;
+        if (yesDiv && noDiv) {
+            yesDiv.style.width = (yesCount / (yesCount + noCount)) * 100 + '%';
+            yesDiv.querySelector('.tooltip').textContent = `Yes: ${yesCount}`;
+            noDiv.style.width = (noCount / (yesCount + noCount)) * 100 + '%';
+            noDiv.querySelector('.tooltip').textContent = `No: ${noCount}`;
+        }
+    }
 }
 
-// // Load the data, process it, and create the word cloud
-// fetchData(dataUrl).then(result => {
-//     const adjectiveCounts = processSurveyData(result.data);
-//     generateWordCloud(adjectiveCounts);
-// });
+function fetchAndUpdateProgressBar() {
+    const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQaYYp3qBhE2S8SJcR2U16WsMNcd-Ipxv9DDzgfRLkRVTYH8OGXXqX-vHreP9dLtdtq0Dp-UDh3eiaU/pub?output=csv";
 
-// // Process survey data to count adjectives
-// function processSurveyData(data) {
-//     let adjectiveCounts = {};
+    fetch(dataUrl)
+        .then(response => response.text())
+        .then(csvText => {
+            let rows = csvText.trim().split('\n').slice(1);
+            let yesCount = 0;
+            let noCount = 0;
 
-//     data.forEach(row => {
-//         const response = row['In regards to the previous question, why do you feel this way?'];
-//         if (response) {
-//             const adjectives = extractAdjectives(response);
-//             adjectives.forEach(adj => {
-//                 adjectiveCounts[adj] = (adjectiveCounts[adj] || 0) + 1;
-//             });
-//         }
-//     });
+            console.log('CSV Rows:', rows); // Log rows to check CSV data
 
-//     return adjectiveCounts;
-// }
+            rows.forEach(row => {
+                if (row.trim()) {
+                    let columns = row.split(',');
 
-// // Generate the word cloud based on adjective counts
-// function generateWordCloud(adjectiveCounts) {
-//     const wordCloud = document.getElementById('wordCloud');
-//     wordCloud.innerHTML = ''; // Clear any existing content
+                    if (columns.length > 6) {
+                        let response = columns[6].trim();
+                        if (response === "Yes") yesCount++;
+                        if (response === "No") noCount++;
+                    }
+                }
+            });
 
-//     Object.keys(adjectiveCounts).forEach(adjective => {
-//         const size = Math.min(Math.max(adjectiveCounts[adjective] * 10, 10), 100); // Adjust size scaling
-//         const span = document.createElement('span');
-//         span.className = 'word';
-//         span.style.fontSize = `${size}px`;
-//         span.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-//         span.style.position = 'absolute';
-//         span.style.top = `${Math.random() * (wordCloud.clientHeight - size)}px`;
-//         span.style.left = `${Math.random() * (wordCloud.clientWidth - size)}px`;
-//         span.textContent = adjective;
-//         wordCloud.appendChild(span);
-//     });
-// }
-
-
-let surveyCoreQuestionArray = [];
-
-// Step 2: Create an array of words with their count
-const words = [
-    {text: "Hello", size: 10},
-    {text: "World", size: 5},
-    {text: "JavaScript", size: 30},
-    {text: "Word", size: 6},
-    {text: "Cloud", size: 7}
-];
-
-// Step 3: Generate the word cloud
-const wordCloud = document.getElementById('wordCloud');
-
-export function createWordCloud() {
-    words.forEach(word => {
-        const span = document.createElement('span');
-        span.className = 'word';
-        span.style.fontSize = word.size + 'px';
-        span.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        span.style.top = `${Math.random() * (wordCloud.clientHeight - word.size)}px`;
-        span.style.left = `${Math.random() * (wordCloud.clientWidth - word.size)}px`;
-        span.textContent = word.text;
-        wordCloud.appendChild(span);
-    });
+            createOrUpdateProgressBar('progressBarContainer', yesCount, noCount);
+        })
+        .catch(error => console.error('Error fetching the CSV data:', error));
 }
+
+// Initial call
+fetchAndUpdateProgressBar();
