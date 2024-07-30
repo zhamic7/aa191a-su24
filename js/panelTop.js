@@ -6,6 +6,7 @@ function createDivWithTooltip(className, id, tooltipText, widthPercentage) {
     div.className = className;
     div.id = id;
     div.style.width = widthPercentage + '%';
+    div.style.position = 'relative';
 
     let tooltip = document.createElement('span');
     tooltip.className = 'tooltip';
@@ -26,6 +27,33 @@ function createOrUpdateProgressBar(elementId, yesCount, noCount) {
         let header = document.createElement('h3');
         header.textContent = 'Do student athletes think there are enough clean and reliable water fountains at NPHS during sports practices?';
         container.appendChild(header);
+
+        // legend
+        let legend = document.createElement('div');
+        legend.className = 'legend';
+
+        // Yes color box
+        let yesBox = document.createElement('div');
+        yesBox.className = 'legend-box';
+        yesBox.style.backgroundColor = 'green'; // Green color for YES
+        legend.appendChild(yesBox);
+        legend.appendChild(document.createTextNode(' YES'));
+
+        let spacer = document.createElement('span');
+        spacer.style.display = 'inline-block';
+        spacer.style.width = '20px'; // Adjust width as needed
+        legend.appendChild(spacer);
+
+        // No color box
+        let noBox = document.createElement('div');
+        noBox.className = 'legend-box';
+        noBox.style.backgroundColor = 'orange'; // Orange color for NO
+        legend.appendChild(noBox);
+        legend.appendChild(document.createTextNode(' NO'));
+
+        container.appendChild(legend);
+
+        // progress bar
 
         let progressBarWrapper = document.createElement('div');
         progressBarWrapper.className = 'progress-bar';

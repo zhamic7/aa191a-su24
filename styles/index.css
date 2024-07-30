@@ -38,15 +38,60 @@
 }
 
 .intro-col1 {
-    background-color: rgb(255, 243, 153);
+    background-color: transparent;
     border: black;
 }
 
 .intro-col2 {
-    background-color: white;
+    background-color: transparent;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* statistics */
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between stat items */
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+}
+
+.stat-number {
+    font-size: 45px; /* Large text for numbers */
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px gold; /* Black text shadow for better contrast */
+}
+
+.special-number {
+    font-size: 45px; /* Large text for numbers */
+    font-weight: bold;
+    color: red;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px pink; /* Black text shadow for better contrast */
+}
+
+.stat-description {
+    font-size: 18px; /* Smaller text for descriptions */
+    color: black; 
 }
 
 /* progress bar */
+
+#chart {
+    margin-top: 20px;
+}
 
 .progress-bar {
 	display: flex;
@@ -62,29 +107,64 @@
 	box-sizing: border-box; /* Ensure padding is included in the width */
 }
 .yes {
-    background-color: rgb(8, 139, 110); 
+    background-color: green; 
 }
 .no {
-    background-color: rgb(231, 96, 0); 
+    background-color: orange; 
 }
+
+/* progress bar pop-up */
+
 .tooltip {
 	visibility: hidden;
-	background-color: black;
+	background-color: #333;
 	color: #fff;
 	text-align: center;
-	border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+	border-radius: 7px;
 	padding: 5px;
 	position: absolute;
-	z-index: 1;
-	bottom: 125%; /* Position above the element */
+	z-index: 10;
+	top: 125%; /* Position below the element */
 	left: 50%;
 	margin-left: -50px;
 	opacity: 0;
 	transition: opacity 0.3s;
+    transform: translateX(-50%); /* Center the tooltip */
 }
+
+#yesBar .tooltip {
+    background-color: green; /* Green background for YES */
+}
+
+/* Tooltip for No */
+#noBar .tooltip {
+    background-color: orange; /* Orange background for NO */
+}
+
 .progress-bar div:hover .tooltip {
 	visibility: visible;
 	opacity: 1;
+}
+
+/* progress bar legend */
+
+.legend {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    justify-content: center; /* Center items horizontally */
+    font-size: 14px; /* Smaller font size for the legend */
+}
+
+.legend-box {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px; /* Space between the box and the text */
 }
 
 /* map and side panel */
