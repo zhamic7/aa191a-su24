@@ -16,14 +16,17 @@ body {
     height: 100vh;
 }
 
+/* Grid Layout */
 body {
     display: grid;
     grid-template-areas:
         "header"
+        "intro"
         "main"
         "footer";
-    grid-template-rows: auto 1fr 7vh;
-    /* Adjusted to reflect the simplified structure */
+    grid-template-rows: auto 1fr 1fr auto; /* Adjust according to the layout needs */
+    height: 100vh; /* Ensure the grid takes up the full viewport height */
+    margin: 0;
 }
 
 header {
@@ -55,6 +58,12 @@ header {
     justify-content: center;
 }
 
+#intro {
+    grid-area: intro;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
 .redirect {
     color: white;
     margin: 5px;
@@ -69,17 +78,4 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-/* new word cloud styles */
-.word-cloud {
-    width: 500px;
-    height: 500px;
-    position: relative;
-    border: 1px solid #ccc;
-    overflow: hidden;
-}
-.word {
-    position: absolute;
-    white-space: nowrap;
-    font-family: Arial, sans-serif;
 }

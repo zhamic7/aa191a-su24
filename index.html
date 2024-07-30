@@ -19,6 +19,9 @@
 
     <!-- PapaParse Library-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!--Compromise Library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/compromise/13.0.0/compromise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.1.0/src/wordcloud2.js"></script>
 </head>
 
 <body>
@@ -35,10 +38,29 @@
         </div>
     </header>
 
-    <main>
-        <div class="col1">
-            <div class="word-cloud" id="wordCloud"></div>
+    <section id="intro">
+        <div class="intro-row1">
+            <div class="intro-title">
+                <h2>Title</h2>
+                <p>Message</p>
+            </div>
         </div>
+        <div class="intro-row2">
+            <div class="intro-col1">
+                <!-- Content for the first column -->
+                <p>Content for the first column goes here.</p>
+            </div>
+            <div class="intro-col2">
+                <!-- Word cloud for the second column -->
+                <div class="word-cloud" id="wordCloud"></div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <!-- <div class="col1">
+            <div class="word-cloud" id="wordCloud"></div>
+        </div> -->
         <div class="col2">
             <div class="title"><h2>Student Responses</h2></div>
             <div id="map">
@@ -65,8 +87,10 @@
         </div>
 
         <div class="col3">
+            <div id="panel-info"><h3>Currently viewing responses from: All</h3></div>
             <div id="filter"></div>
-            <div id="cards"></div>           
+            <div id="cards"></div> 
+            <div id="panel-end">You have reached the end of all available responses.</div>          
         </div>
     </main>
 

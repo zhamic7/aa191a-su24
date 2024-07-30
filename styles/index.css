@@ -1,6 +1,62 @@
 @import "style.css";
 
-/* Defines the page layout using a grid */
+/* General section styling */
+#intro {
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.intro-row1 {
+    margin-bottom: 20px;
+}
+
+.intro-title h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.intro-title p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.intro-row2 {
+    display: flex;
+    gap: 20px;
+}
+
+.intro-col1, .intro-col2 {
+    flex: 1;
+}
+
+.intro-col1 {
+    background-color: white;
+    border: black;
+}
+
+.intro-col2 {
+    background-color: white;
+}
+
+/* word cloud styles */
+.word-cloud {
+    width: 700px;
+    height: 300px;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff762; /* Background color for visibility */
+}
+
+.word {
+    position: absolute;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+}
+
+/* map and side panel */
 main {
     grid-area: main;
     display: grid;
@@ -120,49 +176,20 @@ label {
     margin-bottom: 10px;
 }
 
-#filter {
+#panel-info {
     position: sticky;
     top: 0;
-    background-color: rgb(155, 198, 220, 0.5);
+    background-color: rgb(155, 198, 220, 1);
 
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px; 
-    justify-content: center; 
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-/* Button styling */
-#filter button {
-    height: 5vh;
-    background-color: #ffe41b; 
+    flex-direction: column; 
     text-align: center;
-    line-height: 2vh;
-
-    border: none; 
-    border-radius: 12px; /* Curved corners */
-    padding: 12px 24px; 
-    font-size: 14px; 
-    font-weight: bold; 
-    color: #333;
-    cursor: pointer; /* Pointer cursor on hover */
-    box-shadow: 0 4px 8px rgb(194, 141, 17); /* Rectangle shadow */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
-}
-
-/* Button hover effect */
-#filter button:hover {
-    background-color: #e4d561; 
-    transform: translateY(-2px); /* Lift the button slightly */
-}
-
-/* Button active effect */
-#filter button:active {
-    background-color: #e4d561; 
-    transform: translateY(0); /* Button returns to original position */
+    padding: 20px;
+    margin-bottom: 1vw;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: black;
+    z-index: 1;
 }
 
 .card {
@@ -171,10 +198,18 @@ label {
     margin-left: 1vw;
     margin-bottom: 1vw;
     border: solid;
-    border-width: 2px;
+    border-width: 5px;
     border-color: black;
     border-radius: 2.5%;
     padding: 1vw;
+}
+
+#panel-end {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 30px;
+    width: 80%;
+    transform: translateX(10%);
 }
 
 /* Typography */

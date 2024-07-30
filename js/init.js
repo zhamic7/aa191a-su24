@@ -2,7 +2,7 @@ import { locations, legend_colors } from "./constants.js";
 import { createCard, filterCards } from "./panelRight.js";
 import { Place, processData } from "./dataProcessing.js";
 import { addMarker } from "./mapLayout.js";
-import { createWordCloud } from "./panelLeft.js";
+import { createWordCloud } from "./panelTop.js";
 
 let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0}; 
 /* can put into processData function to edit 
@@ -163,7 +163,7 @@ map.on('load', function() {
             });
             map.on('click', polygon_name, (e) => {
                 let tag = polygon_name.split(' ')[0]; // Get first word only of key
-                filterCards(tag);
+                filterCards(polygon_name);
             });
         });
      })
@@ -178,7 +178,7 @@ map.on('load', function() {
         complete: function(results) { // Process the parsed data
             let responses = processData(results.data, surveyCoreQuestionArray); // Use a new function to handle CSV data
             console.log(surveyCoreQuestionArray);
-            responses.forEach(place => createCard(place.place, place.card));
+            responses.forEach(place => createCard(place.place, place.card, place.category_color));
         }
     });
 });
