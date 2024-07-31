@@ -35,7 +35,9 @@ For student athletes who spend long hours at school, access to clean and reliabl
 ## The Mapplication
 Click [here](https://zhamic7.github.io/aa191a-su24/) to open the mapplication. 
   
-### Home Page
+### Home Page 
+Features include an interactive chart showing response counts, a map with location buttons, and a side panel with student responses!
+
 <img src="https://github.com/zhamic7/aa191a-su24/blob/e15ba50dc789af1d01581e839c2e994687608e52/home%20page.png" alt="Home Page Screenshot" width="720" height="393">
 
 ## Contact
