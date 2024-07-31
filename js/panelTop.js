@@ -25,7 +25,8 @@ function createOrUpdateProgressBar(elementId, yesCount, noCount) {
         container.id = elementId;
 
         let header = document.createElement('h3');
-        header.textContent = 'Do student athletes think there are enough clean and reliable water fountains at NPHS during sports practices?';
+        header.textContent = 'Do NPHS student athletes think there are enough clean and reliable water fountains during sports practices?';
+        header.style.lineHeight = '1.5';
         container.appendChild(header);
 
         // legend
@@ -82,34 +83,25 @@ function createOrUpdateProgressBar(elementId, yesCount, noCount) {
     }
 }
 
-function fetchAndUpdateProgressBar() {
-    const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQaYYp3qBhE2S8SJcR2U16WsMNcd-Ipxv9DDzgfRLkRVTYH8OGXXqX-vHreP9dLtdtq0Dp-UDh3eiaU/pub?output=csv";
+function fetchAndUpdateProgressBar(rows) {
+    // let rows = data.split('\n').slice(1); // Skip header row
+    let yesCount = 0;
+    let noCount = 0;
+    rows.forEach((row) => {
+        if (row) {
+            let response = row['Do you think there are enough clean and reliable water fountains at NPHS during sports practices? '];
+            console.log('Response:', response); 
+            if (response === "Yes") yesCount++;
+            if (response === "No") noCount++;
+        }
+    });
 
-    fetch(dataUrl)
-        .then(response => response.text())
-        .then(csvText => {
-            let rows = csvText.trim().split('\n').slice(1);
-            let yesCount = 0;
-            let noCount = 0;
+    console.log('Yes Count:', yesCount); // Log final counts
+    console.log('No Count:', noCount);
 
-            console.log('CSV Rows:', rows); // Log rows to check CSV data
-
-            rows.forEach(row => {
-                if (row.trim()) {
-                    let columns = row.split(',');
-
-                    if (columns.length > 6) {
-                        let response = columns[6].trim();
-                        if (response === "Yes") yesCount++;
-                        if (response === "No") noCount++;
-                    }
-                }
-            });
-
-            createOrUpdateProgressBar('progressBarContainer', yesCount, noCount);
-        })
-        .catch(error => console.error('Error fetching the CSV data:', error));
+    createOrUpdateProgressBar('progressBarContainer', yesCount, noCount);
 }
 
-// Initial call
-fetchAndUpdateProgressBar();
+export { fetchAndUpdateProgressBar };
+
+// fetchAndUpdateProgressBar();

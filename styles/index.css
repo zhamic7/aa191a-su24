@@ -3,10 +3,12 @@
 /* General section styling */
 #intro {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
     gap: 20px;
+    align-items: center;
 }
 
 .intro-title {
@@ -17,9 +19,8 @@
 
 .intro-title h2 {
     margin: 0;
-    font-size: 24px;
     color: rgb(8, 4, 80);
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 }
 
 .intro-title p {
@@ -28,27 +29,38 @@
     color: #000000;
 }
 
-.intro-col1, .intro-col2 {
-    flex: 1;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    height: 300px;
-    width: 200px;
+.intro-col1,
+.intro-col2 {
+    width: 82%; /* Decrease the width of each column */
+    max-width: 1200px; /* Optional: max width to prevent it from growing too large */
 }
 
 .intro-col1 {
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
     background-color: transparent;
-    border: black;
+    margin: 0 auto;
 }
 
 .intro-col2 {
-    background-color: transparent;
+    flex: 1; 
+    background-color: rgb(255, 248, 192);
     text-align: center;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
+}
+
+.intro-col1 h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 45px; /* Adjust based on the height of .stat-number */
+    display: flex;
+    align-items: center; /* Center vertically */
 }
 
 /* statistics */
@@ -79,18 +91,27 @@
     font-weight: bold;
     color: red;
     margin-bottom: 5px;
-    text-shadow: 2px 2px 4px pink; /* Black text shadow for better contrast */
+    text-shadow: 2px 2px 4px orange; /* Black text shadow for better contrast */
 }
 
 .stat-description {
     font-size: 18px; /* Smaller text for descriptions */
     color: black; 
+    font-weight: 600;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.special-text {
+    font-size: 18px; /* Smaller text for descriptions */
+    color: red; 
+    font-weight: 600;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /* progress bar */
 
 #chart {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .progress-bar {
@@ -106,6 +127,9 @@
 	padding: 5px; /* Added padding */
 	box-sizing: border-box; /* Ensure padding is included in the width */
 }
+
+/* progress bar colors */
+
 .yes {
     background-color: green; 
 }
@@ -123,7 +147,7 @@
     font-size: 12px;
     white-space: nowrap;
 	border-radius: 7px;
-	padding: 5px;
+	padding: 8px;
 	position: absolute;
 	z-index: 10;
 	top: 125%; /* Position below the element */
@@ -131,9 +155,10 @@
 	margin-left: -50px;
 	opacity: 0;
 	transition: opacity 0.3s;
-    transform: translateX(-50%); /* Center the tooltip */
+    transform: translateX(-50%); /* Center the tooltip horizontally */
 }
 
+/* Tooltip for No */
 #yesBar .tooltip {
     background-color: green; /* Green background for YES */
 }

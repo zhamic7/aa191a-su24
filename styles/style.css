@@ -39,12 +39,11 @@ header {
     grid-template-areas:
         "title"
         "navbar";
-    grid-template-rows: 15vh 10vh;
+    grid-template-rows: 12vh 8vh;
 }
 
 #title {
     grid-area: title;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,6 +57,12 @@ header {
     justify-content: center;
 }
 
+#navbar a.redirect {
+    margin: 0 15px; 
+    transition: opacity 0.3s ease; /* Smooth transition effect */
+}
+
+/* Dim the text on hover */
 #navbar a.redirect {
     margin: 0 15px; /* Spacing between links */
     transition: opacity 0.3s ease; /* Smooth transition effect */

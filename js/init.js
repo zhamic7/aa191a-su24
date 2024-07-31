@@ -2,6 +2,7 @@ import { locations, legend_colors, response_colors } from "./constants.js";
 import { createCard, filterCards } from "./panelRight.js";
 import { Place, processData } from "./dataProcessing.js";
 import { addMarker } from "./mapLayout.js";
+import { fetchAndUpdateProgressBar } from "./panelTop.js"; // albert: hi michelle i added this 😊 
 
 let surveyCoreQuestionArray = { "Yes" : 0, "No" : 0}; 
 /* can put into processData function to edit 
@@ -73,12 +74,13 @@ map.on('load', function() {
             let responses = processData(results.data, surveyCoreQuestionArray); // Use a new function to handle CSV data
             console.log(surveyCoreQuestionArray);
             responses.forEach(place => createCard(place.place, place.card, place.category_color));
+            fetchAndUpdateProgressBar(results.data);
         }
     });
 });
 
 // Create map legend
-let legend = `<form><div><p style="font-weight: bold; margin-bottom:10px;">Legend</p>`;
+let legend = `<form><div><p style="font-weight: bold; margin-bottom:10px;"></p>`;
 for (const [key, value] of Object.entries(legend_colors)) {
     let image = `background-color: ${value};`;
     if (key === "Water Fountains") {
