@@ -63,6 +63,67 @@
     align-items: center; /* Center vertically */
 }
 
+/* Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Sticky button styles */
+.sticky-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: none; /* Remove default background */
+    border: none; /* Remove default border */
+    padding: 0; /* Remove default padding */
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticky-button img {
+    width: 40px; /* Adjust the size of the image */
+    height: auto;
+}
+
+.sticky-button:hover img {
+    opacity: 0.8; /* Optional: Change opacity on hover */
+}
+
 /* statistics */
 
 .stats-container {

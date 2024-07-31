@@ -1,5 +1,32 @@
 // import { locations, response_colors } from "./constants.js";
 
+// Get modal element
+var modal = document.getElementById("modal");
+var openModalBtn = document.getElementById("open-modal-btn");
+var closeBtn = document.getElementsByClassName("close")[0];
+
+// Open the modal on page load
+window.onload = function() {
+    modal.style.display = "block";
+};
+
+// Open the modal when clicking the sticky button
+openModalBtn.onclick = function() {
+    modal.style.display = "block";
+};
+
+// Close the modal when clicking the close button
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+};
+
+// Close the modal when clicking outside of the modal
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
 // progress bar 
 function createDivWithTooltip(className, id, tooltipText, widthPercentage) {
     let div = document.createElement('div');
