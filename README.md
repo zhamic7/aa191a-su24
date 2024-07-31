@@ -32,7 +32,7 @@ Our mapplication aims to empower student athletes in grades 9-12 at NPHS who, al
 
 For student athletes who spend long hours at school, access to clean and reliable water sources is essential for their physical well-being and comfort. As this matter speaks to the health, performance, and daily experience of student athletes, it is important that they have a platform to voice their honest opinions and concerns. While our current mapplication is for student athletes at NPHS to voice their experiences with clean water access, this project can also serve as a prototype for student groups at other public high schools. Student-led service organizations at all public high schools that are concerned about water fountain conditions, or even other infrastructure issues (e.g., restrooms) and on-campus resources (e.g., internet access), can repurpose this project to amplify the voices of the impacted student communities.
 
-## The mapplication
+## The Mapplication
 Click [here](https://zhamic7.github.io/aa191a-su24/) to open the mapplication. 
 
 ## Contact
