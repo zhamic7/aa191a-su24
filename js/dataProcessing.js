@@ -25,7 +25,7 @@ export function Place(time, place, water_src, water_src_desc, clean, clean_desc)
     
     this.card = `<div class="popupTitle">
                     <p style="font-size:16px; font-weight:bolder;">
-                        <span style="font-size: 20px; margin:2.5px;">${clean.toUpperCase()}</span> from ${place} (${months[date[0]]} ${date[2]})
+                        <span style="font-size: 20px; margin:2.5px;">${clean.toUpperCase()}</span> from ${place} (${months[date[0] - 1]} ${date[2]})
                     </p>
                 </div>
                 <div style="margin:5px;">
