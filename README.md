@@ -37,9 +37,6 @@ Click [here](https://zhamic7.github.io/aa191a-su24/) to open the mapplication.
   
 ### Home Page
 <img src="https://github.com/zhamic7/aa191a-su24/blob/e15ba50dc789af1d01581e839c2e994687608e52/home%20page.png" alt="Home Page Screenshot" width="720" height="393">
-  
-### Demo
-<img src="https://github.com/zhamic7/aa191a-su24/blob/e15ba50dc789af1d01581e839c2e994687608e52/website%20demo.gif" alt="Demo GIF" width="720" height="393">
 
 ## Contact
 This project was designed by [Michelle Zhao](miczhao@g.ucla.edu) and [Sadhana Jeyakumar](sjeyakum@g.ucla.edu). Please contact us if you have any questions or concerns. 
