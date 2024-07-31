@@ -35,6 +35,21 @@ For student athletes who spend long hours at school, access to clean and reliabl
 ## The Mapplication
 Click [here](https://zhamic7.github.io/aa191a-su24/) to open the mapplication. 
 
+<table>
+<tr>
+<td>
+  
+### Home Page
+<img src="https://github.com/zhamic7/aa191a-su24/blob/e15ba50dc789af1d01581e839c2e994687608e52/home%20page.png" alt="Home Page Screenshot" width="300" height="300">
+</td>
+<td>
+  
+### Demo
+<img src="https://github.com/zhamic7/aa191a-su24/blob/e15ba50dc789af1d01581e839c2e994687608e52/website%20demo.gif" alt="Demo GIF" width="300" height="300">
+</td>
+</tr>
+</table>
+
 ## Contact
 This project was designed by [Michelle Zhao](miczhao@g.ucla.edu) and [Sadhana Jeyakumar](sjeyakum@g.ucla.edu). Please contact us if you have any questions or concerns. 
 
