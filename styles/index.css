@@ -197,7 +197,7 @@ main {
     grid-area: main;
     display: grid;
     grid-template-areas: "col1 col2 col3";
-    grid-template-columns: 0.5fr 3fr 1.5fr 0.5fr;
+    grid-template-columns: 0.5fr 3.25fr 1.25fr 0.5fr;
     margin: 1rem;
 }
 
@@ -351,6 +351,27 @@ label {
     border-color: black;
     border-radius: 2.5%;
     padding: 1rem;
+}
+
+.expand-btn {
+    background-color: #ffe41b; 
+    border: none; 
+    border-radius: 12px; /* Curved corners */
+    padding: 5px; 
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 2px 2px rgb(194, 141, 17); /* Rectangle shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+/* Button hover effect */
+.expand-btn:hover {
+    background-color: #e4d561; 
+    transform: translateY(-2px); /* Lift the button slightly */
+}
+
+/* Button active effect */
+.expand-btn:active {
+    background-color: #e4d561; 
+    transform: translateY(0); /* Button returns to original position */
 }
 
 #panel-end {

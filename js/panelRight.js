@@ -1,12 +1,38 @@
 import { locations, response_colors } from "./constants.js";
 
-export function createCard(place, content, color) {
+let card_visibility = new Set();
+
+function cardExpansion(id_no) {
+    let expand = document.getElementById("card_"+ + id_no);
+    let control = document.getElementById("btn_"+ id_no);
+    if (card_visibility.has(id_no)) {
+        card_visibility.delete(id_no);
+        expand.style.visibility = 'visible';
+        expand.style.height = 'auto';
+        expand.style.marginTop = "10px";
+        control.innerHTML = `<p style="font-style:italic;">▲ Collapse</p>`;
+    }
+    else {
+        card_visibility.add(id_no);
+        expand.style.visibility = 'hidden'
+        expand.style.height = '0';
+        expand.style.marginTop = '0';
+        control.innerHTML = `<p style="font-style:italic;">▼ Read more</p>`;
+    }
+}
+
+export function createCard(response) {
     const card = document.createElement('div');
-    card.className = "card " + locations[place].short; // Get first word only
-    card.innerHTML = `<p>${content}</p>`;
-    card.style.borderColor = color.border;
-    card.style.backgroundColor = color.background;
+    card.className = "card " + locations[response.place].short; // Get first word only
+    card.innerHTML = `${response.card}${response.more_info}`;
+    card.style.borderColor = response.category_color.border;
+    card.style.backgroundColor = response.category_color.background;
     document.getElementById("cards").prepend(card);
+
+    let id_no = response.id_no;
+    let control = document.getElementById("btn_"+ id_no);
+    control.addEventListener('click', () => { cardExpansion(id_no); });
+    card_visibility.add(id_no);
 }
 
 export function filterCards(place) {

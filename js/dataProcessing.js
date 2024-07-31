@@ -6,7 +6,7 @@ const months = [ "January", "February", "March", "April", "May", "June",
 const structures = new Set();
 let clusters = new Object();
 
-function checkPlace(place) {
+export function checkPlace(place) {
     if(structures.has(place)) {
         clusters[place] = clusters[place] + 1;
     }
@@ -19,25 +19,34 @@ function checkPlace(place) {
 export function Place(time, place, water_src, water_src_desc, clean, clean_desc) {
     let lat = locations[place].lat;
     let lon = locations[place].lon;
+    let date = time.split(' ')[0].split('/');
 
-    let stories = `<p style="font-weight:bold;">During sports practices, do you mostly rely on water sources off-campus, on-campus, or both? <\p>
-                    <p>${water_src}</p>
-                    <br>
-                    <p style="font-weight:bold;">In regards to the previous question, what is the reason for your preference (or lack thereof)? </p>
-                    <p>${water_src_desc}</p>
-                    <br>
-                    <p style="font-weight:bold;">Do you think there are enough clean and reliable water fountains at NPHS during sports practices? </p>
-                    <p>${clean}</p>
-                    <br>
-                    <p style="font-weight:bold;">In regards to the previous question, why do you feel this way? </p>
-                    <p>${clean_desc}</p>`;
-
-    let title = `<div class="popupTitle">
-                            <p style="font-size:16px; font-weight:bold;">Response from ${place}, (${months[time[0]]} ${time[2]})</p>
-                </div>`
+    this.id_no = time.split(' ').join('').split('/').join('').split(':').join('');
     
+    this.card = `<div class="popupTitle">
+                    <p style="font-size:16px; font-weight:bolder;">
+                        <span style="font-size: 20px; margin:2.5px;">${clean.toUpperCase()}</span> from ${place} (${months[date[0]]} ${date[2]})
+                    </p>
+                </div>
+                <div style="margin:5px;">
+                    <p>
+                        <span style="font-weight:bold;">Reason: </span>"${clean_desc}"
+                    </p>
+                </div>
+                <div style="display: flex; justify-content: flex-end">
+                    <button id="btn_${this.id_no}" class="expand-btn"><p style="font-style:italic;">▼ Read more</p></button>
+                </div>`;
+
+    this.more_info = `<div id="card_${this.id_no}" style="visibility:hidden;height:0;margin-top:0;">
+                        <p>
+                            <span style="font-weight:bold;">
+                                Relies on water sources from ${water_src.split(' ')[0].toUpperCase()}: 
+                            </span>"${water_src_desc}"
+                        </p>
+
+                    </div>`;
+
     this.place = place;
-    this.card = title + `<p style="margin-top: 7px;">${stories}</p>`;
     this.coords = [lon, lat];
     this.category_color = response_colors[clean];
 }
